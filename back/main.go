@@ -8,6 +8,8 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 	_ "github.com/lib/pq"
 	"net/http"
+	"github.com/gin-contrib/cors"
+	"time"
 )
 
 func GetForm(c *gin.Context) {
@@ -30,6 +32,19 @@ func main() {
 	client := database.NewDatabase()
 	s := server.NewServer()
 	defer client.Def.Close()
+
+	s.Def.Use(cors.New(cors.Config{
+        AllowOrigins:     []string{"*"},
+        AllowMethods:     []string{"*"},
+        AllowHeaders:     []string{"Origin"},
+        ExposeHeaders:    []string{"Content-Length"},
+        AllowCredentials: true,
+        AllowOriginFunc: func(origin string) bool {
+            return origin == "https://github.com"
+        },
+        MaxAge: 12 * time.Hour,
+    }))
+
 	ApplyRoutes(s.Def)
 	s.Def.Run()
 }
