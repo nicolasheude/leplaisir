@@ -47,8 +47,12 @@ export default class NameForm extends React.Component {
           child:
            {
              age: 18,
-             prenom: 'nicolas'}
-           }
+             prenom: 'nicolas'},
+           parents:
+             {
+               nom: 'bard',
+               prenom: 'lenny'}
+             }
 
       console.log(body)
       fetch('http://127.0.0.1:8080/hello', {
