@@ -28,11 +28,6 @@ export default function SimpleSelectSemaine() {
 
     return (
         <div>
-            <FormControl className='select' 
-            style={{
-                margin: 25,
-                minWidth: 120
-                }}>
                 <InputLabel id="demo-simple-select-label">Semaine</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
@@ -44,7 +39,6 @@ export default function SimpleSelectSemaine() {
                     <MenuItem value={20}>Semaine 2</MenuItem>
                     <MenuItem value={30}>Semaine 3</MenuItem>
                 </Select>
-            </FormControl>
         </div>
     );
 }

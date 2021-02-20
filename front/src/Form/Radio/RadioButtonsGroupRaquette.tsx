@@ -15,17 +15,11 @@ export default function RadioButtonsGroupRaquette() {
 
     return (
         <Grid container spacing={3}>
-            <FormControl component="fieldset"
-            style={{
-                margin: 25,
-                minWidth: 120
-                }}>
                 <FormLabel component="legend">Location de raquette</FormLabel>
                 <RadioGroup aria-label="answer" name="answer1" value={value} onChange={handleChange}>
                     <FormControlLabel value="oui" control={<Radio />} label="oui" />
                     <FormControlLabel value="non" control={<Radio />} label="non" />
                 </RadioGroup>
-            </FormControl>
         </Grid>
     );
 }

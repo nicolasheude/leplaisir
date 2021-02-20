@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function DatePickers() {
     const classes = useStyles();
     return (
-        <form className={classes.container} noValidate>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}></Grid>
                 <TextField
@@ -34,6 +33,5 @@ export default function DatePickers() {
                     }}
                 />
             </Grid>
-        </form>
     );
 }

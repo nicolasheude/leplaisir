@@ -15,17 +15,10 @@ export default function RadioButtonsGroupGender() {
 
     return (
         <Grid container spacing={3}>
-            <FormControl component="fieldset"
-            style={{
-                margin: 25,
-                minWidth: 120
-                }}>
-                <FormLabel component="legend">Sexe</FormLabel>
                 <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
                     <FormControlLabel value="feminin" control={<Radio />} label="Féminin" />
                     <FormControlLabel value="masculin" control={<Radio />} label="Masculin" />
                 </RadioGroup>
-            </FormControl>
         </Grid>
     );
 }
