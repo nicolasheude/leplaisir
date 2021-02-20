@@ -241,6 +241,19 @@ func (smq *StockManagerQuery) Clone() *StockManagerQuery {
 
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		Activite string `json:"Activite,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.StockManager.Query().
+//		GroupBy(stockmanager.FieldActivite).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
+//
 func (smq *StockManagerQuery) GroupBy(field string, fields ...string) *StockManagerGroupBy {
 	group := &StockManagerGroupBy{config: smq.config}
 	group.fields = append([]string{field}, fields...)
@@ -255,6 +268,17 @@ func (smq *StockManagerQuery) GroupBy(field string, fields ...string) *StockMana
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		Activite string `json:"Activite,omitempty"`
+//	}
+//
+//	client.StockManager.Query().
+//		Select(stockmanager.FieldActivite).
+//		Scan(ctx, &v)
+//
 func (smq *StockManagerQuery) Select(field string, fields ...string) *StockManagerSelect {
 	smq.fields = append([]string{field}, fields...)
 	return &StockManagerSelect{StockManagerQuery: smq}

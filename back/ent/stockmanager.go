@@ -12,9 +12,27 @@ import (
 
 // StockManager is the model entity for the StockManager schema.
 type StockManager struct {
-	config
+	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// Activite holds the value of the "Activite" field.
+	Activite string `json:"Activite,omitempty"`
+	// SemaineA holds the value of the "SemaineA" field.
+	SemaineA int `json:"SemaineA,omitempty"`
+	// SemaineB holds the value of the "SemaineB" field.
+	SemaineB int `json:"SemaineB,omitempty"`
+	// SemaineC holds the value of the "SemaineC" field.
+	SemaineC int `json:"SemaineC,omitempty"`
+	// SemaineD holds the value of the "SemaineD" field.
+	SemaineD int `json:"SemaineD,omitempty"`
+	// SemaineE holds the value of the "SemaineE" field.
+	SemaineE int `json:"SemaineE,omitempty"`
+	// SemaineF holds the value of the "SemaineF" field.
+	SemaineF int `json:"SemaineF,omitempty"`
+	// SemaineG holds the value of the "SemaineG" field.
+	SemaineG int `json:"SemaineG,omitempty"`
+	// SemaineH holds the value of the "SemaineH" field.
+	SemaineH int `json:"SemaineH,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -22,8 +40,10 @@ func (*StockManager) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case stockmanager.FieldID:
+		case stockmanager.FieldID, stockmanager.FieldSemaineA, stockmanager.FieldSemaineB, stockmanager.FieldSemaineC, stockmanager.FieldSemaineD, stockmanager.FieldSemaineE, stockmanager.FieldSemaineF, stockmanager.FieldSemaineG, stockmanager.FieldSemaineH:
 			values[i] = &sql.NullInt64{}
+		case stockmanager.FieldActivite:
+			values[i] = &sql.NullString{}
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type StockManager", columns[i])
 		}
@@ -45,6 +65,60 @@ func (sm *StockManager) assignValues(columns []string, values []interface{}) err
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			sm.ID = int(value.Int64)
+		case stockmanager.FieldActivite:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field Activite", values[i])
+			} else if value.Valid {
+				sm.Activite = value.String
+			}
+		case stockmanager.FieldSemaineA:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field SemaineA", values[i])
+			} else if value.Valid {
+				sm.SemaineA = int(value.Int64)
+			}
+		case stockmanager.FieldSemaineB:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field SemaineB", values[i])
+			} else if value.Valid {
+				sm.SemaineB = int(value.Int64)
+			}
+		case stockmanager.FieldSemaineC:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field SemaineC", values[i])
+			} else if value.Valid {
+				sm.SemaineC = int(value.Int64)
+			}
+		case stockmanager.FieldSemaineD:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field SemaineD", values[i])
+			} else if value.Valid {
+				sm.SemaineD = int(value.Int64)
+			}
+		case stockmanager.FieldSemaineE:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field SemaineE", values[i])
+			} else if value.Valid {
+				sm.SemaineE = int(value.Int64)
+			}
+		case stockmanager.FieldSemaineF:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field SemaineF", values[i])
+			} else if value.Valid {
+				sm.SemaineF = int(value.Int64)
+			}
+		case stockmanager.FieldSemaineG:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field SemaineG", values[i])
+			} else if value.Valid {
+				sm.SemaineG = int(value.Int64)
+			}
+		case stockmanager.FieldSemaineH:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field SemaineH", values[i])
+			} else if value.Valid {
+				sm.SemaineH = int(value.Int64)
+			}
 		}
 	}
 	return nil
@@ -73,6 +147,24 @@ func (sm *StockManager) String() string {
 	var builder strings.Builder
 	builder.WriteString("StockManager(")
 	builder.WriteString(fmt.Sprintf("id=%v", sm.ID))
+	builder.WriteString(", Activite=")
+	builder.WriteString(sm.Activite)
+	builder.WriteString(", SemaineA=")
+	builder.WriteString(fmt.Sprintf("%v", sm.SemaineA))
+	builder.WriteString(", SemaineB=")
+	builder.WriteString(fmt.Sprintf("%v", sm.SemaineB))
+	builder.WriteString(", SemaineC=")
+	builder.WriteString(fmt.Sprintf("%v", sm.SemaineC))
+	builder.WriteString(", SemaineD=")
+	builder.WriteString(fmt.Sprintf("%v", sm.SemaineD))
+	builder.WriteString(", SemaineE=")
+	builder.WriteString(fmt.Sprintf("%v", sm.SemaineE))
+	builder.WriteString(", SemaineF=")
+	builder.WriteString(fmt.Sprintf("%v", sm.SemaineF))
+	builder.WriteString(", SemaineG=")
+	builder.WriteString(fmt.Sprintf("%v", sm.SemaineG))
+	builder.WriteString(", SemaineH=")
+	builder.WriteString(fmt.Sprintf("%v", sm.SemaineH))
 	builder.WriteByte(')')
 	return builder.String()
 }

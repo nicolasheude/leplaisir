@@ -4,9 +4,11 @@ package ent
 
 import (
 	"context"
+	"dechild/ent/admin"
 	"dechild/ent/contactparents"
 	"dechild/ent/form"
 	"dechild/ent/predicate"
+	"dechild/ent/stockmanager"
 	"fmt"
 	"sync"
 
@@ -22,10 +24,358 @@ const (
 	OpUpdateOne = ent.OpUpdateOne
 
 	// Node types.
+	TypeAdmin          = "Admin"
 	TypeContactParents = "ContactParents"
 	TypeForm           = "Form"
 	TypeStockManager   = "StockManager"
 )
+
+// AdminMutation represents an operation that mutates the Admin nodes in the graph.
+type AdminMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *int
+	_Identifiant  *string
+	_MotDePasse   *string
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*Admin, error)
+	predicates    []predicate.Admin
+}
+
+var _ ent.Mutation = (*AdminMutation)(nil)
+
+// adminOption allows management of the mutation configuration using functional options.
+type adminOption func(*AdminMutation)
+
+// newAdminMutation creates new mutation for the Admin entity.
+func newAdminMutation(c config, op Op, opts ...adminOption) *AdminMutation {
+	m := &AdminMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeAdmin,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withAdminID sets the ID field of the mutation.
+func withAdminID(id int) adminOption {
+	return func(m *AdminMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *Admin
+		)
+		m.oldValue = func(ctx context.Context) (*Admin, error) {
+			once.Do(func() {
+				if m.done {
+					err = fmt.Errorf("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().Admin.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withAdmin sets the old Admin of the mutation.
+func withAdmin(node *Admin) adminOption {
+	return func(m *AdminMutation) {
+		m.oldValue = func(context.Context) (*Admin, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m AdminMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m AdminMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of Admin entities.
+func (m *AdminMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID
+// is only available if it was provided to the builder.
+func (m *AdminMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// SetIdentifiant sets the "Identifiant" field.
+func (m *AdminMutation) SetIdentifiant(s string) {
+	m._Identifiant = &s
+}
+
+// Identifiant returns the value of the "Identifiant" field in the mutation.
+func (m *AdminMutation) Identifiant() (r string, exists bool) {
+	v := m._Identifiant
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIdentifiant returns the old "Identifiant" field's value of the Admin entity.
+// If the Admin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AdminMutation) OldIdentifiant(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldIdentifiant is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldIdentifiant requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIdentifiant: %w", err)
+	}
+	return oldValue.Identifiant, nil
+}
+
+// ResetIdentifiant resets all changes to the "Identifiant" field.
+func (m *AdminMutation) ResetIdentifiant() {
+	m._Identifiant = nil
+}
+
+// SetMotDePasse sets the "MotDePasse" field.
+func (m *AdminMutation) SetMotDePasse(s string) {
+	m._MotDePasse = &s
+}
+
+// MotDePasse returns the value of the "MotDePasse" field in the mutation.
+func (m *AdminMutation) MotDePasse() (r string, exists bool) {
+	v := m._MotDePasse
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMotDePasse returns the old "MotDePasse" field's value of the Admin entity.
+// If the Admin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AdminMutation) OldMotDePasse(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldMotDePasse is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldMotDePasse requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMotDePasse: %w", err)
+	}
+	return oldValue.MotDePasse, nil
+}
+
+// ResetMotDePasse resets all changes to the "MotDePasse" field.
+func (m *AdminMutation) ResetMotDePasse() {
+	m._MotDePasse = nil
+}
+
+// Op returns the operation name.
+func (m *AdminMutation) Op() Op {
+	return m.op
+}
+
+// Type returns the node type of this mutation (Admin).
+func (m *AdminMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *AdminMutation) Fields() []string {
+	fields := make([]string, 0, 2)
+	if m._Identifiant != nil {
+		fields = append(fields, admin.FieldIdentifiant)
+	}
+	if m._MotDePasse != nil {
+		fields = append(fields, admin.FieldMotDePasse)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *AdminMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case admin.FieldIdentifiant:
+		return m.Identifiant()
+	case admin.FieldMotDePasse:
+		return m.MotDePasse()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *AdminMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case admin.FieldIdentifiant:
+		return m.OldIdentifiant(ctx)
+	case admin.FieldMotDePasse:
+		return m.OldMotDePasse(ctx)
+	}
+	return nil, fmt.Errorf("unknown Admin field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *AdminMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case admin.FieldIdentifiant:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIdentifiant(v)
+		return nil
+	case admin.FieldMotDePasse:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMotDePasse(v)
+		return nil
+	}
+	return fmt.Errorf("unknown Admin field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *AdminMutation) AddedFields() []string {
+	return nil
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *AdminMutation) AddedField(name string) (ent.Value, bool) {
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *AdminMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	}
+	return fmt.Errorf("unknown Admin numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *AdminMutation) ClearedFields() []string {
+	return nil
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *AdminMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *AdminMutation) ClearField(name string) error {
+	return fmt.Errorf("unknown Admin nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *AdminMutation) ResetField(name string) error {
+	switch name {
+	case admin.FieldIdentifiant:
+		m.ResetIdentifiant()
+		return nil
+	case admin.FieldMotDePasse:
+		m.ResetMotDePasse()
+		return nil
+	}
+	return fmt.Errorf("unknown Admin field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *AdminMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *AdminMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *AdminMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *AdminMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *AdminMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *AdminMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *AdminMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown Admin unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *AdminMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown Admin edge %s", name)
+}
 
 // ContactParentsMutation represents an operation that mutates the ContactParents nodes in the graph.
 type ContactParentsMutation struct {
@@ -1828,6 +2178,23 @@ type StockManagerMutation struct {
 	op            Op
 	typ           string
 	id            *int
+	_Activite     *string
+	_SemaineA     *int
+	add_SemaineA  *int
+	_SemaineB     *int
+	add_SemaineB  *int
+	_SemaineC     *int
+	add_SemaineC  *int
+	_SemaineD     *int
+	add_SemaineD  *int
+	_SemaineE     *int
+	add_SemaineE  *int
+	_SemaineF     *int
+	add_SemaineF  *int
+	_SemaineG     *int
+	add_SemaineG  *int
+	_SemaineH     *int
+	add_SemaineH  *int
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*StockManager, error)
@@ -1904,6 +2271,12 @@ func (m StockManagerMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of StockManager entities.
+func (m *StockManagerMutation) SetID(id int) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID
 // is only available if it was provided to the builder.
 func (m *StockManagerMutation) ID() (id int, exists bool) {
@@ -1911,6 +2284,490 @@ func (m *StockManagerMutation) ID() (id int, exists bool) {
 		return
 	}
 	return *m.id, true
+}
+
+// SetActivite sets the "Activite" field.
+func (m *StockManagerMutation) SetActivite(s string) {
+	m._Activite = &s
+}
+
+// Activite returns the value of the "Activite" field in the mutation.
+func (m *StockManagerMutation) Activite() (r string, exists bool) {
+	v := m._Activite
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldActivite returns the old "Activite" field's value of the StockManager entity.
+// If the StockManager object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *StockManagerMutation) OldActivite(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldActivite is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldActivite requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldActivite: %w", err)
+	}
+	return oldValue.Activite, nil
+}
+
+// ResetActivite resets all changes to the "Activite" field.
+func (m *StockManagerMutation) ResetActivite() {
+	m._Activite = nil
+}
+
+// SetSemaineA sets the "SemaineA" field.
+func (m *StockManagerMutation) SetSemaineA(i int) {
+	m._SemaineA = &i
+	m.add_SemaineA = nil
+}
+
+// SemaineA returns the value of the "SemaineA" field in the mutation.
+func (m *StockManagerMutation) SemaineA() (r int, exists bool) {
+	v := m._SemaineA
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSemaineA returns the old "SemaineA" field's value of the StockManager entity.
+// If the StockManager object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *StockManagerMutation) OldSemaineA(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldSemaineA is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldSemaineA requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSemaineA: %w", err)
+	}
+	return oldValue.SemaineA, nil
+}
+
+// AddSemaineA adds i to the "SemaineA" field.
+func (m *StockManagerMutation) AddSemaineA(i int) {
+	if m.add_SemaineA != nil {
+		*m.add_SemaineA += i
+	} else {
+		m.add_SemaineA = &i
+	}
+}
+
+// AddedSemaineA returns the value that was added to the "SemaineA" field in this mutation.
+func (m *StockManagerMutation) AddedSemaineA() (r int, exists bool) {
+	v := m.add_SemaineA
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSemaineA resets all changes to the "SemaineA" field.
+func (m *StockManagerMutation) ResetSemaineA() {
+	m._SemaineA = nil
+	m.add_SemaineA = nil
+}
+
+// SetSemaineB sets the "SemaineB" field.
+func (m *StockManagerMutation) SetSemaineB(i int) {
+	m._SemaineB = &i
+	m.add_SemaineB = nil
+}
+
+// SemaineB returns the value of the "SemaineB" field in the mutation.
+func (m *StockManagerMutation) SemaineB() (r int, exists bool) {
+	v := m._SemaineB
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSemaineB returns the old "SemaineB" field's value of the StockManager entity.
+// If the StockManager object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *StockManagerMutation) OldSemaineB(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldSemaineB is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldSemaineB requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSemaineB: %w", err)
+	}
+	return oldValue.SemaineB, nil
+}
+
+// AddSemaineB adds i to the "SemaineB" field.
+func (m *StockManagerMutation) AddSemaineB(i int) {
+	if m.add_SemaineB != nil {
+		*m.add_SemaineB += i
+	} else {
+		m.add_SemaineB = &i
+	}
+}
+
+// AddedSemaineB returns the value that was added to the "SemaineB" field in this mutation.
+func (m *StockManagerMutation) AddedSemaineB() (r int, exists bool) {
+	v := m.add_SemaineB
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSemaineB resets all changes to the "SemaineB" field.
+func (m *StockManagerMutation) ResetSemaineB() {
+	m._SemaineB = nil
+	m.add_SemaineB = nil
+}
+
+// SetSemaineC sets the "SemaineC" field.
+func (m *StockManagerMutation) SetSemaineC(i int) {
+	m._SemaineC = &i
+	m.add_SemaineC = nil
+}
+
+// SemaineC returns the value of the "SemaineC" field in the mutation.
+func (m *StockManagerMutation) SemaineC() (r int, exists bool) {
+	v := m._SemaineC
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSemaineC returns the old "SemaineC" field's value of the StockManager entity.
+// If the StockManager object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *StockManagerMutation) OldSemaineC(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldSemaineC is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldSemaineC requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSemaineC: %w", err)
+	}
+	return oldValue.SemaineC, nil
+}
+
+// AddSemaineC adds i to the "SemaineC" field.
+func (m *StockManagerMutation) AddSemaineC(i int) {
+	if m.add_SemaineC != nil {
+		*m.add_SemaineC += i
+	} else {
+		m.add_SemaineC = &i
+	}
+}
+
+// AddedSemaineC returns the value that was added to the "SemaineC" field in this mutation.
+func (m *StockManagerMutation) AddedSemaineC() (r int, exists bool) {
+	v := m.add_SemaineC
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSemaineC resets all changes to the "SemaineC" field.
+func (m *StockManagerMutation) ResetSemaineC() {
+	m._SemaineC = nil
+	m.add_SemaineC = nil
+}
+
+// SetSemaineD sets the "SemaineD" field.
+func (m *StockManagerMutation) SetSemaineD(i int) {
+	m._SemaineD = &i
+	m.add_SemaineD = nil
+}
+
+// SemaineD returns the value of the "SemaineD" field in the mutation.
+func (m *StockManagerMutation) SemaineD() (r int, exists bool) {
+	v := m._SemaineD
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSemaineD returns the old "SemaineD" field's value of the StockManager entity.
+// If the StockManager object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *StockManagerMutation) OldSemaineD(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldSemaineD is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldSemaineD requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSemaineD: %w", err)
+	}
+	return oldValue.SemaineD, nil
+}
+
+// AddSemaineD adds i to the "SemaineD" field.
+func (m *StockManagerMutation) AddSemaineD(i int) {
+	if m.add_SemaineD != nil {
+		*m.add_SemaineD += i
+	} else {
+		m.add_SemaineD = &i
+	}
+}
+
+// AddedSemaineD returns the value that was added to the "SemaineD" field in this mutation.
+func (m *StockManagerMutation) AddedSemaineD() (r int, exists bool) {
+	v := m.add_SemaineD
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSemaineD resets all changes to the "SemaineD" field.
+func (m *StockManagerMutation) ResetSemaineD() {
+	m._SemaineD = nil
+	m.add_SemaineD = nil
+}
+
+// SetSemaineE sets the "SemaineE" field.
+func (m *StockManagerMutation) SetSemaineE(i int) {
+	m._SemaineE = &i
+	m.add_SemaineE = nil
+}
+
+// SemaineE returns the value of the "SemaineE" field in the mutation.
+func (m *StockManagerMutation) SemaineE() (r int, exists bool) {
+	v := m._SemaineE
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSemaineE returns the old "SemaineE" field's value of the StockManager entity.
+// If the StockManager object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *StockManagerMutation) OldSemaineE(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldSemaineE is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldSemaineE requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSemaineE: %w", err)
+	}
+	return oldValue.SemaineE, nil
+}
+
+// AddSemaineE adds i to the "SemaineE" field.
+func (m *StockManagerMutation) AddSemaineE(i int) {
+	if m.add_SemaineE != nil {
+		*m.add_SemaineE += i
+	} else {
+		m.add_SemaineE = &i
+	}
+}
+
+// AddedSemaineE returns the value that was added to the "SemaineE" field in this mutation.
+func (m *StockManagerMutation) AddedSemaineE() (r int, exists bool) {
+	v := m.add_SemaineE
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSemaineE resets all changes to the "SemaineE" field.
+func (m *StockManagerMutation) ResetSemaineE() {
+	m._SemaineE = nil
+	m.add_SemaineE = nil
+}
+
+// SetSemaineF sets the "SemaineF" field.
+func (m *StockManagerMutation) SetSemaineF(i int) {
+	m._SemaineF = &i
+	m.add_SemaineF = nil
+}
+
+// SemaineF returns the value of the "SemaineF" field in the mutation.
+func (m *StockManagerMutation) SemaineF() (r int, exists bool) {
+	v := m._SemaineF
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSemaineF returns the old "SemaineF" field's value of the StockManager entity.
+// If the StockManager object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *StockManagerMutation) OldSemaineF(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldSemaineF is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldSemaineF requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSemaineF: %w", err)
+	}
+	return oldValue.SemaineF, nil
+}
+
+// AddSemaineF adds i to the "SemaineF" field.
+func (m *StockManagerMutation) AddSemaineF(i int) {
+	if m.add_SemaineF != nil {
+		*m.add_SemaineF += i
+	} else {
+		m.add_SemaineF = &i
+	}
+}
+
+// AddedSemaineF returns the value that was added to the "SemaineF" field in this mutation.
+func (m *StockManagerMutation) AddedSemaineF() (r int, exists bool) {
+	v := m.add_SemaineF
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSemaineF resets all changes to the "SemaineF" field.
+func (m *StockManagerMutation) ResetSemaineF() {
+	m._SemaineF = nil
+	m.add_SemaineF = nil
+}
+
+// SetSemaineG sets the "SemaineG" field.
+func (m *StockManagerMutation) SetSemaineG(i int) {
+	m._SemaineG = &i
+	m.add_SemaineG = nil
+}
+
+// SemaineG returns the value of the "SemaineG" field in the mutation.
+func (m *StockManagerMutation) SemaineG() (r int, exists bool) {
+	v := m._SemaineG
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSemaineG returns the old "SemaineG" field's value of the StockManager entity.
+// If the StockManager object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *StockManagerMutation) OldSemaineG(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldSemaineG is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldSemaineG requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSemaineG: %w", err)
+	}
+	return oldValue.SemaineG, nil
+}
+
+// AddSemaineG adds i to the "SemaineG" field.
+func (m *StockManagerMutation) AddSemaineG(i int) {
+	if m.add_SemaineG != nil {
+		*m.add_SemaineG += i
+	} else {
+		m.add_SemaineG = &i
+	}
+}
+
+// AddedSemaineG returns the value that was added to the "SemaineG" field in this mutation.
+func (m *StockManagerMutation) AddedSemaineG() (r int, exists bool) {
+	v := m.add_SemaineG
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSemaineG resets all changes to the "SemaineG" field.
+func (m *StockManagerMutation) ResetSemaineG() {
+	m._SemaineG = nil
+	m.add_SemaineG = nil
+}
+
+// SetSemaineH sets the "SemaineH" field.
+func (m *StockManagerMutation) SetSemaineH(i int) {
+	m._SemaineH = &i
+	m.add_SemaineH = nil
+}
+
+// SemaineH returns the value of the "SemaineH" field in the mutation.
+func (m *StockManagerMutation) SemaineH() (r int, exists bool) {
+	v := m._SemaineH
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSemaineH returns the old "SemaineH" field's value of the StockManager entity.
+// If the StockManager object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *StockManagerMutation) OldSemaineH(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldSemaineH is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldSemaineH requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSemaineH: %w", err)
+	}
+	return oldValue.SemaineH, nil
+}
+
+// AddSemaineH adds i to the "SemaineH" field.
+func (m *StockManagerMutation) AddSemaineH(i int) {
+	if m.add_SemaineH != nil {
+		*m.add_SemaineH += i
+	} else {
+		m.add_SemaineH = &i
+	}
+}
+
+// AddedSemaineH returns the value that was added to the "SemaineH" field in this mutation.
+func (m *StockManagerMutation) AddedSemaineH() (r int, exists bool) {
+	v := m.add_SemaineH
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSemaineH resets all changes to the "SemaineH" field.
+func (m *StockManagerMutation) ResetSemaineH() {
+	m._SemaineH = nil
+	m.add_SemaineH = nil
 }
 
 // Op returns the operation name.
@@ -1927,7 +2784,34 @@ func (m *StockManagerMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *StockManagerMutation) Fields() []string {
-	fields := make([]string, 0, 0)
+	fields := make([]string, 0, 9)
+	if m._Activite != nil {
+		fields = append(fields, stockmanager.FieldActivite)
+	}
+	if m._SemaineA != nil {
+		fields = append(fields, stockmanager.FieldSemaineA)
+	}
+	if m._SemaineB != nil {
+		fields = append(fields, stockmanager.FieldSemaineB)
+	}
+	if m._SemaineC != nil {
+		fields = append(fields, stockmanager.FieldSemaineC)
+	}
+	if m._SemaineD != nil {
+		fields = append(fields, stockmanager.FieldSemaineD)
+	}
+	if m._SemaineE != nil {
+		fields = append(fields, stockmanager.FieldSemaineE)
+	}
+	if m._SemaineF != nil {
+		fields = append(fields, stockmanager.FieldSemaineF)
+	}
+	if m._SemaineG != nil {
+		fields = append(fields, stockmanager.FieldSemaineG)
+	}
+	if m._SemaineH != nil {
+		fields = append(fields, stockmanager.FieldSemaineH)
+	}
 	return fields
 }
 
@@ -1935,6 +2819,26 @@ func (m *StockManagerMutation) Fields() []string {
 // return value indicates that this field was not set, or was not defined in the
 // schema.
 func (m *StockManagerMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case stockmanager.FieldActivite:
+		return m.Activite()
+	case stockmanager.FieldSemaineA:
+		return m.SemaineA()
+	case stockmanager.FieldSemaineB:
+		return m.SemaineB()
+	case stockmanager.FieldSemaineC:
+		return m.SemaineC()
+	case stockmanager.FieldSemaineD:
+		return m.SemaineD()
+	case stockmanager.FieldSemaineE:
+		return m.SemaineE()
+	case stockmanager.FieldSemaineF:
+		return m.SemaineF()
+	case stockmanager.FieldSemaineG:
+		return m.SemaineG()
+	case stockmanager.FieldSemaineH:
+		return m.SemaineH()
+	}
 	return nil, false
 }
 
@@ -1942,6 +2846,26 @@ func (m *StockManagerMutation) Field(name string) (ent.Value, bool) {
 // returned if the mutation operation is not UpdateOne, or the query to the
 // database failed.
 func (m *StockManagerMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case stockmanager.FieldActivite:
+		return m.OldActivite(ctx)
+	case stockmanager.FieldSemaineA:
+		return m.OldSemaineA(ctx)
+	case stockmanager.FieldSemaineB:
+		return m.OldSemaineB(ctx)
+	case stockmanager.FieldSemaineC:
+		return m.OldSemaineC(ctx)
+	case stockmanager.FieldSemaineD:
+		return m.OldSemaineD(ctx)
+	case stockmanager.FieldSemaineE:
+		return m.OldSemaineE(ctx)
+	case stockmanager.FieldSemaineF:
+		return m.OldSemaineF(ctx)
+	case stockmanager.FieldSemaineG:
+		return m.OldSemaineG(ctx)
+	case stockmanager.FieldSemaineH:
+		return m.OldSemaineH(ctx)
+	}
 	return nil, fmt.Errorf("unknown StockManager field %s", name)
 }
 
@@ -1950,6 +2874,69 @@ func (m *StockManagerMutation) OldField(ctx context.Context, name string) (ent.V
 // type.
 func (m *StockManagerMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case stockmanager.FieldActivite:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetActivite(v)
+		return nil
+	case stockmanager.FieldSemaineA:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSemaineA(v)
+		return nil
+	case stockmanager.FieldSemaineB:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSemaineB(v)
+		return nil
+	case stockmanager.FieldSemaineC:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSemaineC(v)
+		return nil
+	case stockmanager.FieldSemaineD:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSemaineD(v)
+		return nil
+	case stockmanager.FieldSemaineE:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSemaineE(v)
+		return nil
+	case stockmanager.FieldSemaineF:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSemaineF(v)
+		return nil
+	case stockmanager.FieldSemaineG:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSemaineG(v)
+		return nil
+	case stockmanager.FieldSemaineH:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSemaineH(v)
+		return nil
 	}
 	return fmt.Errorf("unknown StockManager field %s", name)
 }
@@ -1957,13 +2944,56 @@ func (m *StockManagerMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *StockManagerMutation) AddedFields() []string {
-	return nil
+	var fields []string
+	if m.add_SemaineA != nil {
+		fields = append(fields, stockmanager.FieldSemaineA)
+	}
+	if m.add_SemaineB != nil {
+		fields = append(fields, stockmanager.FieldSemaineB)
+	}
+	if m.add_SemaineC != nil {
+		fields = append(fields, stockmanager.FieldSemaineC)
+	}
+	if m.add_SemaineD != nil {
+		fields = append(fields, stockmanager.FieldSemaineD)
+	}
+	if m.add_SemaineE != nil {
+		fields = append(fields, stockmanager.FieldSemaineE)
+	}
+	if m.add_SemaineF != nil {
+		fields = append(fields, stockmanager.FieldSemaineF)
+	}
+	if m.add_SemaineG != nil {
+		fields = append(fields, stockmanager.FieldSemaineG)
+	}
+	if m.add_SemaineH != nil {
+		fields = append(fields, stockmanager.FieldSemaineH)
+	}
+	return fields
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *StockManagerMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case stockmanager.FieldSemaineA:
+		return m.AddedSemaineA()
+	case stockmanager.FieldSemaineB:
+		return m.AddedSemaineB()
+	case stockmanager.FieldSemaineC:
+		return m.AddedSemaineC()
+	case stockmanager.FieldSemaineD:
+		return m.AddedSemaineD()
+	case stockmanager.FieldSemaineE:
+		return m.AddedSemaineE()
+	case stockmanager.FieldSemaineF:
+		return m.AddedSemaineF()
+	case stockmanager.FieldSemaineG:
+		return m.AddedSemaineG()
+	case stockmanager.FieldSemaineH:
+		return m.AddedSemaineH()
+	}
 	return nil, false
 }
 
@@ -1971,6 +3001,64 @@ func (m *StockManagerMutation) AddedField(name string) (ent.Value, bool) {
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
 func (m *StockManagerMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case stockmanager.FieldSemaineA:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSemaineA(v)
+		return nil
+	case stockmanager.FieldSemaineB:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSemaineB(v)
+		return nil
+	case stockmanager.FieldSemaineC:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSemaineC(v)
+		return nil
+	case stockmanager.FieldSemaineD:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSemaineD(v)
+		return nil
+	case stockmanager.FieldSemaineE:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSemaineE(v)
+		return nil
+	case stockmanager.FieldSemaineF:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSemaineF(v)
+		return nil
+	case stockmanager.FieldSemaineG:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSemaineG(v)
+		return nil
+	case stockmanager.FieldSemaineH:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSemaineH(v)
+		return nil
+	}
 	return fmt.Errorf("unknown StockManager numeric field %s", name)
 }
 
@@ -1996,6 +3084,35 @@ func (m *StockManagerMutation) ClearField(name string) error {
 // ResetField resets all changes in the mutation for the field with the given name.
 // It returns an error if the field is not defined in the schema.
 func (m *StockManagerMutation) ResetField(name string) error {
+	switch name {
+	case stockmanager.FieldActivite:
+		m.ResetActivite()
+		return nil
+	case stockmanager.FieldSemaineA:
+		m.ResetSemaineA()
+		return nil
+	case stockmanager.FieldSemaineB:
+		m.ResetSemaineB()
+		return nil
+	case stockmanager.FieldSemaineC:
+		m.ResetSemaineC()
+		return nil
+	case stockmanager.FieldSemaineD:
+		m.ResetSemaineD()
+		return nil
+	case stockmanager.FieldSemaineE:
+		m.ResetSemaineE()
+		return nil
+	case stockmanager.FieldSemaineF:
+		m.ResetSemaineF()
+		return nil
+	case stockmanager.FieldSemaineG:
+		m.ResetSemaineG()
+		return nil
+	case stockmanager.FieldSemaineH:
+		m.ResetSemaineH()
+		return nil
+	}
 	return fmt.Errorf("unknown StockManager field %s", name)
 }
 

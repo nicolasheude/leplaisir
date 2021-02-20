@@ -8,6 +8,19 @@ import (
 )
 
 var (
+	// AdminsColumns holds the columns for the "admins" table.
+	AdminsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "identifiant", Type: field.TypeString},
+		{Name: "mot_de_passe", Type: field.TypeString},
+	}
+	// AdminsTable holds the schema information for the "admins" table.
+	AdminsTable = &schema.Table{
+		Name:        "admins",
+		Columns:     AdminsColumns,
+		PrimaryKey:  []*schema.Column{AdminsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{},
+	}
 	// ContactParentsColumns holds the columns for the "contact_parents" table.
 	ContactParentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
@@ -63,6 +76,15 @@ var (
 	// StockManagersColumns holds the columns for the "stock_managers" table.
 	StockManagersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "activite", Type: field.TypeString},
+		{Name: "semainea", Type: field.TypeInt},
+		{Name: "semaineb", Type: field.TypeInt},
+		{Name: "semainec", Type: field.TypeInt},
+		{Name: "semained", Type: field.TypeInt},
+		{Name: "semainee", Type: field.TypeInt},
+		{Name: "semainef", Type: field.TypeInt},
+		{Name: "semaineg", Type: field.TypeInt},
+		{Name: "semaineh", Type: field.TypeInt},
 	}
 	// StockManagersTable holds the schema information for the "stock_managers" table.
 	StockManagersTable = &schema.Table{
@@ -73,6 +95,7 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
+		AdminsTable,
 		ContactParentsTable,
 		FormsTable,
 		StockManagersTable,
