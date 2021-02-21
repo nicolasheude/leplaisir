@@ -11,12 +11,12 @@ import (
 )
 
 type FormData struct {
-	Child   Form           `form:"child"`
+	Child   Form           `json:"child"`
 	Parents ContactParents `json:"parents"`
 }
 
 type Form struct {
-	Email        string `form:"email"`
+	Email        string `json:"email"`
 	Nom          string `json:"nom"`
 	Prenom       string `json:"prenom"`
 	Anniversaire string `json:"anniversaire"`
@@ -222,9 +222,9 @@ func CheckManager(Data FormData) bool {
 
 // CreateForm Create a developer from its ID
 func CreateFrom(Data FormData, ctx context.Context, client *ent.Client) (*ent.Form, error) {
-	/*if CheckManager(Data) == false {
+	if CheckManager(Data) == false {
 		return nil, fmt.Errorf("Place not available or child already registered")
-	}*/
+	}
 	newClient, err := client.Form.
 		Create().
 		SetEmail(Data.Child.Email).

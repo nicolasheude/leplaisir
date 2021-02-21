@@ -29,7 +29,7 @@ type DataAdmin struct {
 
 func GetForm(c *gin.Context) {
 	data := controllers.FormData{}
-	err := c.ShouldBind(&data)
+	err := c.BindJSON(&data)
 	fmt.Println(data)
 	if err != nil {
 		fmt.Printf("Ligne 1 : [%w]", err)

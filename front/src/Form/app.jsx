@@ -32,7 +32,7 @@ export default function Form() {
       ...state,
       [evt.target.name]: value
     });
-  }  
+  }
 
   const handleSubmit = (event) => {
       let child_s = {
@@ -71,21 +71,12 @@ export default function Form() {
 
       fetch('http://0.0.0.0:8080/form', {
           method: 'POST',
-          body: body
+          body: JSON.stringify(body)
         }).then(function(response) {
           console.log(response)
           return response;
-        });
+        }).catch((err)=>console.error(err)) ;
       event.preventDefault();
-
-    fetch('http://0.0.0.0:8080/hello', {
-      method: 'POST',
-      body: "hello"
-    }).then(function(response) {
-      console.log(response.body)
-      return response;
-    });
-    event.preventDefault();
   }
 
   return (
@@ -229,7 +220,7 @@ export default function Form() {
                 </div>
             </div>
           </div>
-  
+
           <div className="column">
           <div className="field">
           <label className="label">Repas ?</label>
