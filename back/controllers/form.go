@@ -11,12 +11,12 @@ import (
 )
 
 type FormData struct {
-	Child   Form           `json:"child"`
+	Child   Form           `form:"child"`
 	Parents ContactParents `json:"parents"`
 }
 
 type Form struct {
-	Email        string `json:"email"`
+	Email        string `form:"email"`
 	Nom          string `json:"nom"`
 	Prenom       string `json:"prenom"`
 	Anniversaire string `json:"anniversaire"`
@@ -87,6 +87,7 @@ func CreateContactParents(Client ContactParents, newChild *ent.Form, ctx context
 		AddChild(newChild).
 		Save(ctx)
 	if err != nil {
+		fmt.Printf("Ligne 6 : [%w]", err)
 		return nil, fmt.Errorf("failed creating new parents: %w", err)
 	}
 	log.Println("client was created: ", newClient)
@@ -221,9 +222,9 @@ func CheckManager(Data FormData) bool {
 
 // CreateForm Create a developer from its ID
 func CreateFrom(Data FormData, ctx context.Context, client *ent.Client) (*ent.Form, error) {
-	if CheckManager(Data) == false {
+	/*if CheckManager(Data) == false {
 		return nil, fmt.Errorf("Place not available or child already registered")
-	}
+	}*/
 	newClient, err := client.Form.
 		Create().
 		SetEmail(Data.Child.Email).
@@ -240,10 +241,12 @@ func CreateFrom(Data FormData, ctx context.Context, client *ent.Client) (*ent.Fo
 		SetSemaine(Data.Child.Semaine).
 		Save(ctx)
 	if err != nil {
+		fmt.Printf("Ligne 3 : [%w]", err)
 		return nil, fmt.Errorf("failed creating new client: %w", err)
 	}
 	_, err = CreateContactParents(Data.Parents, newClient, ctx, client)
 	if err != nil {
+		fmt.Printf("Ligne 4 : [%w]", err)
 		return nil, fmt.Errorf("failed creating new parent: %w", err)
 	}
 	log.Println("client was created: ", newClient)

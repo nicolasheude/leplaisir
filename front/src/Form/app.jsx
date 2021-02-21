@@ -69,7 +69,7 @@ export default function Form() {
 
       console.log(body)
 
-      fetch('http://127.0.0.1:8080/form', {
+      fetch('http://0.0.0.0:8080/form', {
           method: 'POST',
           body: body
         }).then(function(response) {
@@ -77,6 +77,15 @@ export default function Form() {
           return response;
         });
       event.preventDefault();
+
+    fetch('http://0.0.0.0:8080/hello', {
+      method: 'POST',
+      body: "hello"
+    }).then(function(response) {
+      console.log(response.body)
+      return response;
+    });
+    event.preventDefault();
   }
 
   return (

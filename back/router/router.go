@@ -30,11 +30,14 @@ type DataAdmin struct {
 func GetForm(c *gin.Context) {
 	data := controllers.FormData{}
 	err := c.ShouldBind(&data)
+	fmt.Println(data)
 	if err != nil {
+		fmt.Printf("Ligne 1 : [%w]", err)
 		c.AbortWithStatus(http.StatusBadRequest)
 	}
 	_, err = controllers.CreateFrom(data, database.Db.Ctx, database.Db.Def)
 	if err != nil {
+		fmt.Printf("Ligne 2 : [%w]", err)
 		c.AbortWithStatus(http.StatusBadRequest)
 	}
 }
@@ -75,8 +78,16 @@ func GetDbWeek(c *gin.Context) {
 	c.JSON(http.StatusOK, tab)
 }
 
+func hello(c *gin.Context) {
+	var data string
+	err := c.ShouldBind(&data)
+	fmt.Println(data, err)
+	c.String(http.StatusOK, data)
+}
+
 func ApplyRoutes(r *gin.Engine) {
 	r.POST("/form", GetForm)
+	r.POST("/hello", hello)
 	r.GET("/semaine", GetDbWeek)
 	r.POST("/admin", controllers.LoginSession)
 }
