@@ -105,7 +105,7 @@ export default function Form() {
               <label className="label">Son nom</label>
               <div className="field-body">
                 <div className="control">
-                  <input type="text" name="child_nom" value={state.child_nom} onChange={handleChange} />
+                  <input type="text" name="child_nom" value={state.child_nom} onChange={handleChange} required/>
                 </div>
               </div>
             </div>
@@ -116,7 +116,7 @@ export default function Form() {
               <label className="label">Son prénom</label>
               <div className="field-body">
                 <div className="control">
-                  <input type="text" name="child_prenom" value={state.child_prenom} onChange={handleChange} />
+                  <input type="text" name="child_prenom" value={state.child_prenom} onChange={handleChange} required/>
                 </div>
               </div>
             </div>
@@ -127,7 +127,7 @@ export default function Form() {
               <label className="label">Son email</label>
               <div className="field-body">
                 <div className="control">
-                  <input type="email" name="child_email" value={state.child_email} onChange={handleChange} />
+                  <input type="email" name="child_email" value={state.child_email} onChange={handleChange} required/>
                 </div>
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function Form() {
               <label className="label">Sa nationalité</label>
               <div className="field-body">
                 <div className="control">
-                  <input type="text" name="child_nationalite" value={state.child_nationalite} onChange={handleChange} />
+                  <input type="text" name="child_nationalite" value={state.child_nationalite} onChange={handleChange} required/>
                 </div>
               </div>
             </div>
@@ -150,7 +150,7 @@ export default function Form() {
             <div className="field">
               <label className="label">Sa date d'anniversaire</label>
               <div className="control">
-                <input type="date" name="child_anniversaire" value={state.child_anniversaire} onChange={handleChange} />
+                <input type="date" name="child_anniversaire" value={state.child_anniversaire} onChange={handleChange} required/>
               </div>
             </div>
           </div>
@@ -159,7 +159,7 @@ export default function Form() {
             <div className="field">
               <label className="label">Son sexe</label>
               <div className="select">
-                  <select type="text" name="child_sexe" value={state.child_sexe} onChange={handleChange}>
+                  <select type="text" name="child_sexe" value={state.child_sexe} onChange={handleChange} required>
                     <option value="homme">Masculin</option>
                     <option value="femme">Féminin</option>
                   </select>
@@ -172,7 +172,7 @@ export default function Form() {
               <label className="label">Son niveau</label>
               <div className="control">
                 <div className="select">
-                  <select type="text" name="child_niveau" value={state.child_niveau} onChange={handleChange}>
+                  <select type="text" name="child_niveau" value={state.child_niveau} onChange={handleChange} required>
                     <option value="debutant">Débutant</option>
                     <option value="intermediaire">Intermédiaire</option>
                     <option value="experimente">Expérimenté</option>
@@ -186,7 +186,7 @@ export default function Form() {
             <div className="field">
               <label className="label">FFT</label>
               <div className="select">
-                  <select type="text" name="child_fft" value={state.child_fft} onChange={handleChange}>
+                  <select type="text" name="child_fft" value={state.child_fft} onChange={handleChange} required>
                     <option value="oui">Oui</option>
                     <option value="non">Non</option>
                   </select>
@@ -213,7 +213,7 @@ export default function Form() {
             <div className="field">
               <label className="label">Location Raquette ?</label>
               <div className="select">
-                  <select type="text" name="child_locationR" value={state.child_locationR} onChange={handleChange}>
+                  <select type="text" name="child_locationR" value={state.child_locationR} onChange={handleChange} required>
                     <option value="oui">Oui</option>
                     <option value="non">Non</option>
                   </select>
@@ -225,7 +225,7 @@ export default function Form() {
           <div className="field">
           <label className="label">Repas ?</label>
           <div className="select">
-                  <select type="text" name="child_repas" value={state.child_repas} onChange={handleChange}>
+                  <select type="text" name="child_repas" value={state.child_repas} onChange={handleChange} required>
                     <option value="restaurant">Restaurant</option>
                     <option value="pique_nique">Pique-Nique</option>
                     <option value="autre">Autre</option>
@@ -238,7 +238,7 @@ export default function Form() {
           <div className="field">
             <label className="label">Formule (Atelier choisi)</label>
             <div className="select">
-                  <select type="text" name="child_formule" value={state.child_formule} onChange={handleChange}>
+                  <select type="text" name="child_formule" value={state.child_formule} onChange={handleChange} required>
                     <option value="Mini-Tennis">Mini-Tennis</option>
                     <option value="Tennis Times">Tennis Times</option>
                     <option value="Tennis + Activitée">Tennis + Activitée</option>
@@ -253,7 +253,7 @@ export default function Form() {
           <div className="field">
             <label className="label">Semaine</label>
             <div className="select">
-                  <select type="text" name="child_semaine" value={state.child_semaine} onChange={handleChange}>
+                  <select type="text" name="child_semaine" value={state.child_semaine} onChange={handleChange} required>
                     <option value="SemaineA">SemaineA</option>
                     <option value="SemaineB">SemaineB</option>
                     <option value="SemaineC">SemaineC</option>
@@ -289,7 +289,7 @@ export default function Form() {
         <div className="field">
           <label className="label">Votre nom</label>
           <div className="control">
-            <input type="text" name="parent_nom" value={state.parent_nom} onChange={handleChange} />
+            <input type="text" name="parent_nom" value={state.parent_nom} onChange={handleChange} required/>
           </div>
         </div>
         </div>
@@ -298,7 +298,7 @@ export default function Form() {
         <div className="field">
           <label className="label">Votre prénom</label>
           <div className="control">
-            <input type="text" name="parent_prenom" value={state.parent_prenom} onChange={handleChange} />
+            <input type="text" name="parent_prenom" value={state.parent_prenom} onChange={handleChange} required/>
           </div>
         </div>
         </div>
@@ -307,7 +307,7 @@ export default function Form() {
         <div className="field">
           <label className="label">Père/Mère</label>
           <div className="select">
-                  <select type="text" name="parent_sexe" value={state.parent_sexe} onChange={handleChange}>
+                  <select type="text" name="parent_sexe" value={state.parent_sexe} onChange={handleChange} required>
                     <option value="homme">Père</option>
                     <option value="femme">Mère</option>
                   </select>
@@ -319,7 +319,7 @@ export default function Form() {
         <div className="field">
           <label className="label">Votre adresse</label>
           <div className="control">
-            <input type="text" name="parent_adresse" value={state.parent_adresse} onChange={handleChange} />
+            <input type="text" name="parent_adresse" value={state.parent_adresse} onChange={handleChange} required/>
           </div>
         </div>
         </div>
@@ -328,7 +328,7 @@ export default function Form() {
         <div className="field">
           <label className="label">Votre ville</label>
           <div className="control">
-            <input type="text" name="parent_ville" value={state.parent_ville} onChange={handleChange} />
+            <input type="text" name="parent_ville" value={state.parent_ville} onChange={handleChange} required/>
           </div>
         </div>
         </div>
@@ -337,7 +337,7 @@ export default function Form() {
         <div className="field">
           <label className="label">Votre Code Postal</label>
           <div className="control">
-            <input type="text" name="parent_cp" value={state.parent_cp} onChange={handleChange} />
+            <input type="text" name="parent_cp" value={state.parent_cp} onChange={handleChange} required/>
           </div>
         </div>
         </div>
@@ -346,7 +346,7 @@ export default function Form() {
         <div className="field">
           <label className="label">Votre Email</label>
           <div className="control">
-            <input type="email" name="parent_email" value={state.parent_email} onChange={handleChange} />
+            <input type="email" name="parent_email" value={state.parent_email} onChange={handleChange} required/>
           </div>
         </div>
         </div>
@@ -355,7 +355,7 @@ export default function Form() {
         <div className="field">
           <label className="label">Votre Téléphone mobile</label>
           <div className="control">
-            <input type="text" name="parent_tel_1" value={state.parent_tel_1} onChange={handleChange} />
+            <input type="text" name="parent_tel_1" value={state.parent_tel_1} onChange={handleChange} required/>
           </div>
         </div>
         </div>
@@ -375,7 +375,7 @@ export default function Form() {
 
         </div>
         </div>
-        <input className="button is-primary" type="submit" value="Envoyer" />
+        <input className="button is-primary" type="submit" value="Envoyer" required/>
         </section>
       </form>
     </React.Fragment>
