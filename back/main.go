@@ -7,9 +7,8 @@ import (
 	"dechild/ent"
 	"dechild/router"
 	"dechild/server"
-	"time"
+	"github.com/gin-gonic/gin"
 
-	"github.com/gin-contrib/cors"
 	_ "github.com/joho/godotenv/autoload"
 	_ "github.com/lib/pq"
 )
@@ -24,6 +23,23 @@ func IfStockInit(ctx context.Context, client *ent.Client) bool {
 	return true
 }
 
+
+func CORS() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+        c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+        c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+        c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
+
+        if c.Request.Method == "OPTIONS" {
+            c.AbortWithStatus(204)
+            return
+        }
+
+        c.Next()
+    }
+}
+
 func main() {
 	client := database.NewDatabase()
 	s := server.NewServer()
@@ -32,17 +48,7 @@ func main() {
 	if IfStockInit(database.Db.Ctx, database.Db.Def) == false {
 		controllers.InitStockManager(database.Db.Ctx, database.Db.Def)
 	}
+	s.Def.Use(CORS())
 	router.ApplyRoutes(s.Def)
-	s.Def.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"*"},
-		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "https://github.com"
-		},
-		MaxAge: 12 * time.Hour,
-	}))
 	s.Def.Run()
 }

@@ -69,11 +69,11 @@ export default function Form() {
 
       console.log(body)
 
-      fetch('http://127.0.0.1:8080/hello', {
+      fetch('http://127.0.0.1:8080/form', {
           method: 'POST',
           body: body
         }).then(function(response) {
-//          console.log(response)
+          console.log(response)
           return response;
         });
       event.preventDefault();
