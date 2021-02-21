@@ -6,6 +6,7 @@ import (
 	"dechild/database"
 	"dechild/ent"
 	"dechild/ent/form"
+	"dechild/middlewares"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -85,9 +86,14 @@ func hello(c *gin.Context) {
 	c.String(http.StatusOK, data)
 }
 
+func manager(c *gin.Context) {
+	return
+}
+
 func ApplyRoutes(r *gin.Engine) {
 	r.POST("/form", GetForm)
 	r.POST("/hello", hello)
 	r.GET("/semaine", GetDbWeek)
 	r.POST("/admin", controllers.LoginSession)
+	r.GET("/manager", middlewares.Auth(), manager)
 }

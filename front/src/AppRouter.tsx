@@ -6,22 +6,8 @@ import React from "react";
 import IndexComponent from './IndexComponent'
 import NameForm from './Form/app'
 import SignIn from './SignIn/app'
+import Tableau from './Table/Table'
 import SignUpConfirm from './SignUpConfirm/app'
-
-/*
-          <header>
-            <nav>
-              <ul>
-            <li>
-              <Link to="/sign-up">Formulaire</Link>
-                </li>
-                <li>
-                  <Link to="/sign-in">Admin</Link>
-                </li>
-              </ul>
-            </nav>
-          </header>
-*/
 
 export default function AppRouter() {
      return (
@@ -40,6 +26,7 @@ export default function AppRouter() {
               <Route path="/" exact component={IndexComponent} />
               <Route path="/sign-up" component={NameForm} />
               <Route path="/sign-in" component={SignIn} />
+              <Route path="/manager" component={Tableau} />
             </Router>
 
          </div>

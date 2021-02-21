@@ -77,6 +77,7 @@ func LoginSession(c *gin.Context) {
 			c.String(http.StatusBadRequest, "No user corresponds to the transmitted identifier, please try again.")
 			return
 		}
+		c.SetCookie("KEY", softcrypto.Encrypt(identifiant, hex.EncodeToString([]byte(os.Getenv("KEY")))), 3600, "/", "127.0.0.1", false, true)
 		c.String(http.StatusOK, "User successfully logged in !")
 		fmt.Println("HEY JE SUIS LOGIN")
 	}

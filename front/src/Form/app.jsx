@@ -69,7 +69,7 @@ export default function Form() {
 
       console.log(body)
 
-      fetch('http://0.0.0.0:8080/form', {
+      fetch('http://127.0.0.1:8080/form', {
           method: 'POST',
           body: JSON.stringify(body)
         }).then(function(response) {

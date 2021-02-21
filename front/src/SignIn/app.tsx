@@ -38,7 +38,7 @@ const handleSubmit = (event: any) => {
   formData.append('identifiant', event.target.identifiant.value);
   formData.append('password', event.target.password.value);
   console.log(formData)
-  fetch('http://0.0.0.0:8080/admin', {
+  fetch('http://127.0.0.1:8080/admin', {
     method: 'POST',
     body: formData
   }).then(function(response) {
