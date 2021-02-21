@@ -13,7 +13,7 @@ export default function TextFieldsParents() {
                     required
                     id="nomparent"
                     name="nomparent"
-                    label="Nom du responsable légal / Représentant légal"
+                    label="Nom du Responsable légal / Représentant légal"
                     fullWidth
                     autoComplete="off"
                 />
@@ -23,7 +23,7 @@ export default function TextFieldsParents() {
                     required
                     id="prenomparent"
                     name="prenomparent"
-                    label="Prénom du responsable légal / Représentant légal"
+                    label="Prénom du Responsable légal / Représentant légal"
                     fullWidth
                     autoComplete="off"
                 />
