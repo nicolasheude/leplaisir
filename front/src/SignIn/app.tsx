@@ -33,9 +33,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const handleSubmit = (event: any) => {
+  let formData = new FormData();
+  formData.append('identifiant', event.target.identifiant.value);
+  formData.append('password', event.target.password.value);
+  console.log(formData)
+  fetch('http://0.0.0.0:8080/admin', {
+    method: 'POST',
+    body: formData
+  }).then(function(response) {
+    console.log(response)
+    return response;
+  }).catch((err)=>console.error(err)) ;
+  event.preventDefault();
+}
+
 export default function Login() {
   const classes = useStyles();
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -46,13 +60,13 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
+            id="identifiant"
             label="Adresse Email"
             name="email"
             autoComplete="email"

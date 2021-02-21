@@ -78,6 +78,7 @@ func LoginSession(c *gin.Context) {
 			return
 		}
 		c.String(http.StatusOK, "User successfully logged in !")
+		fmt.Println("HEY JE SUIS LOGIN")
 	}
 	return
 }
