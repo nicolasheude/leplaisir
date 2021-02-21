@@ -91,8 +91,8 @@ const StyledTableRow = withStyles((theme: Theme) =>
   }),
 )(TableRow);
 
-function createData(name: string, firstname: string, age: number, sexe: string, repas: string, formule: string, niveau: string,  raquette: string) {
-  return { name, firstname, age, sexe, repas, formule, niveau, raquette };
+function createData(nom: string, prenom: string, anniversaire: number, sexe: string, repas: string, formuler: string, niveau: string,  location: string) {
+  return { nom, prenom, anniversaire, sexe, repas, formuler, niveau, location };
 }
 
 const rows = [
@@ -130,17 +130,17 @@ export default function Tableau() {
         </TableHead>
         <TableBody>
           {Semaine&&Semaine.tab.map((row:any) => (
-            <StyledTableRow key={row.name}>
+            <StyledTableRow key={row.nom}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.nom}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.firstname}</StyledTableCell>
-              <StyledTableCell align="right">{row.age}</StyledTableCell>
-              <StyledTableCell align="right">{row.sexe}</StyledTableCell>
-              <StyledTableCell align="right">{row.repas}</StyledTableCell>
-              <StyledTableCell align="right">{row.formule}</StyledTableCell>
-              <StyledTableCell align="right">{row.niveau}</StyledTableCell>
-              <StyledTableCell align="right">{row.raquette}</StyledTableCell>
+                <StyledTableCell align="right">{row.prenom}</StyledTableCell>
+                <StyledTableCell align="right">{row.anniversaire}</StyledTableCell>
+                <StyledTableCell align="right">{row.sexe}</StyledTableCell>
+                <StyledTableCell align="right">{row.niveau}</StyledTableCell>
+                <StyledTableCell align="right">{row.formuler}</StyledTableCell>
+                <StyledTableCell align="right">{row.repas}</StyledTableCell>
+                <StyledTableCell align="right">{row.location}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
