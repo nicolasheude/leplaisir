@@ -8,29 +8,40 @@ import NameForm from './Form/app'
 import SignIn from './SignIn/app'
 import SignUpConfirm from './SignUpConfirm/app'
 
+/*
+          <header>
+            <nav>
+              <ul>
+            <li>
+              <Link to="/sign-up">Formulaire</Link>
+                </li>
+                <li>
+                  <Link to="/sign-in">Admin</Link>
+                </li>
+              </ul>
+            </nav>
+          </header>
+*/
+
 export default function AppRouter() {
      return (
-       <Router>
          <div>
-           <nav>
-             <ul>
-               <li>
-                 <Link to="/">Home</Link>
-               </li>
-           <li>
-             <Link to="/sign-up">Sign Up</Link>
-               </li>
-              <li>
-                <Link to="/sign-in">Sign In</Link>
-              </li>
-            </ul>
-          </nav>
+            <Router>
+              <nav className="navbar" role="navigation" aria-label="main navigation">
+                <div className="navbar-item">
+                  <img src="/logo.png" width="112" height="28" />
+                </div>
+                <div className="navbar-start">
+                  <Link to="/sign-in" className="navbar-item">Admin</Link>
+                  <Link to="/sign-up" className="navbar-item">Formulaire</Link>
+                </div>
+              </nav>
 
-           <Route path="/" exact component={IndexComponent} />
-           <Route path="/sign-up" component={NameForm} />
-           <Route path="/sign-up-confirm" component={SignUpConfirm} />
-           <Route path="/sign-in" component={SignIn} />
+              <Route path="/" exact component={IndexComponent} />
+              <Route path="/sign-up" component={NameForm} />
+              <Route path="/sign-in" component={SignIn} />
+            </Router>
+
          </div>
-       </Router>
      );
   }
