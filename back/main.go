@@ -7,6 +7,9 @@ import (
 	"dechild/ent"
 	"dechild/router"
 	"dechild/server"
+	"time"
+
+	"github.com/gin-contrib/cors"
 	_ "github.com/joho/godotenv/autoload"
 	_ "github.com/lib/pq"
 )
@@ -30,5 +33,16 @@ func main() {
 		controllers.InitStockManager(database.Db.Ctx, database.Db.Def)
 	}
 	router.ApplyRoutes(s.Def)
+	s.Def.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"*"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "https://github.com"
+		},
+		MaxAge: 12 * time.Hour,
+	}))
 	s.Def.Run()
 }
