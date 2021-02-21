@@ -20,7 +20,7 @@ export default function AppRouter() {
                 <div className="navbar-start">
                   <Link to="/sign-in" className="navbar-item">Admin</Link>
                   <Link to="/sign-up" className="navbar-item">Formulaire</Link>
-                  <Link to="/dash" className="navbar-item">Planning</Link>
+                  <Link to="/manager" className="navbar-item">Planning</Link>
                 </div>
               </nav>
 

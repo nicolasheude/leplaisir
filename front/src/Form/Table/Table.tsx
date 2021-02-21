@@ -19,7 +19,7 @@ import Chip from '@material-ui/core/Chip';
 import {stageData} from '../../data';
 
 async function getDatas (Semaine:string) {
-    return fetch('http://0.0.0.0:8080/semaine?semaine='+Semaine, {
+    return fetch('http://127.0.0.1:8080/semaine?semaine='+Semaine, {
   method: 'GET',
     }).then((Response)=> {
       console.log(Response)
@@ -29,10 +29,11 @@ async function getDatas (Semaine:string) {
 };
 
 const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>, Semaine: any, setSemaine:any) => {
-  async function toto() {
+  /*async function toto() {
     setSemaine(await getDatas(event.target.value as string))
   }
-  toto()
+  toto()*/
+    setSemaine(stageData)
   ;
 }
 function NativeSelects (props: any) {
