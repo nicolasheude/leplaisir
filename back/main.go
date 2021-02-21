@@ -1,50 +1,54 @@
 package main
 
 import (
+	"context"
 	"dechild/controllers"
 	"dechild/database"
+	"dechild/ent"
+	"dechild/router"
 	"dechild/server"
 	"github.com/gin-gonic/gin"
+
 	_ "github.com/joho/godotenv/autoload"
 	_ "github.com/lib/pq"
-	"net/http"
-	"github.com/gin-contrib/cors"
-	"time"
 )
 
-func GetForm(c *gin.Context) {
-	data := controllers.FormData{}
-	err := c.ShouldBind(&data)
-	status := controllers.CheckDoesNotExist(data, database.Db.Ctx, database.Db.Def)
-	if status == true {
-		controllers.CreateFrom(data, database.Db.Ctx, database.Db.Def)
+func IfStockInit(ctx context.Context, client *ent.Client) bool {
+	db, _ := client.StockManager.
+		Query().
+		All(ctx)
+	if len(db) == 0 {
+		return false
 	}
-	if err != nil {
-		c.AbortWithStatus(http.StatusBadRequest)
-	}
+	return true
 }
 
-func ApplyRoutes(r *gin.Engine) {
-	r.POST("/hello", GetForm)
+
+func CORS() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+        c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+        c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+        c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
+
+        if c.Request.Method == "OPTIONS" {
+            c.AbortWithStatus(204)
+            return
+        }
+
+        c.Next()
+    }
 }
 
 func main() {
 	client := database.NewDatabase()
 	s := server.NewServer()
 	defer client.Def.Close()
-
-	s.Def.Use(cors.New(cors.Config{
-        AllowOrigins:     []string{"*"},
-        AllowMethods:     []string{"*"},
-        AllowHeaders:     []string{"Origin"},
-        ExposeHeaders:    []string{"Content-Length"},
-        AllowCredentials: true,
-        AllowOriginFunc: func(origin string) bool {
-            return origin == "https://github.com"
-        },
-        MaxAge: 12 * time.Hour,
-    }))
-
-	ApplyRoutes(s.Def)
+	controllers.InitAdminManager()
+	if IfStockInit(database.Db.Ctx, database.Db.Def) == false {
+		controllers.InitStockManager(database.Db.Ctx, database.Db.Def)
+	}
+	s.Def.Use(CORS())
+	router.ApplyRoutes(s.Def)
 	s.Def.Run()
 }

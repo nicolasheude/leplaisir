@@ -14,6 +14,7 @@
     "@types/react-dom": "^17.0.1",
     "@types/react-router-dom": "^5.1.7",
     "agentkeepalive": "^4.1.4",
+    "babel": "^6.23.0",
     "bulma": "^0.9.2",
     "module": "^1.2.5",
     "node-module": "^2.0.0",

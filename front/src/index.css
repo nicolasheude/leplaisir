@@ -128,10 +128,16 @@ table {
   border-spacing: 0;
 }
 
+/*
 header * {
   display: inline !important;
 }
 
+
 ul * {
   margin: 0 0 3px 0;
+}*/
+
+.is-link {
+  background-color: #3498DB !important;
 }

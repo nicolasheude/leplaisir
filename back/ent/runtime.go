@@ -3,15 +3,23 @@
 package ent
 
 import (
+	"dechild/ent/admin"
 	"dechild/ent/contactparents"
 	"dechild/ent/form"
 	"dechild/ent/schema"
+	"dechild/ent/stockmanager"
 )
 
 // The init function reads all schema descriptors with runtime code
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	adminFields := schema.Admin{}.Fields()
+	_ = adminFields
+	// adminDescID is the schema descriptor for id field.
+	adminDescID := adminFields[0].Descriptor()
+	// admin.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	admin.IDValidator = adminDescID.Validators[0].(func(int) error)
 	contactparentsFields := schema.ContactParents{}.Fields()
 	_ = contactparentsFields
 	// contactparentsDescID is the schema descriptor for id field.
@@ -24,4 +32,42 @@ func init() {
 	formDescID := formFields[0].Descriptor()
 	// form.IDValidator is a validator for the "id" field. It is called by the builders before save.
 	form.IDValidator = formDescID.Validators[0].(func(int) error)
+	stockmanagerFields := schema.StockManager{}.Fields()
+	_ = stockmanagerFields
+	// stockmanagerDescSemaineA is the schema descriptor for SemaineA field.
+	stockmanagerDescSemaineA := stockmanagerFields[2].Descriptor()
+	// stockmanager.SemaineAValidator is a validator for the "SemaineA" field. It is called by the builders before save.
+	stockmanager.SemaineAValidator = stockmanagerDescSemaineA.Validators[0].(func(int) error)
+	// stockmanagerDescSemaineB is the schema descriptor for SemaineB field.
+	stockmanagerDescSemaineB := stockmanagerFields[3].Descriptor()
+	// stockmanager.SemaineBValidator is a validator for the "SemaineB" field. It is called by the builders before save.
+	stockmanager.SemaineBValidator = stockmanagerDescSemaineB.Validators[0].(func(int) error)
+	// stockmanagerDescSemaineC is the schema descriptor for SemaineC field.
+	stockmanagerDescSemaineC := stockmanagerFields[4].Descriptor()
+	// stockmanager.SemaineCValidator is a validator for the "SemaineC" field. It is called by the builders before save.
+	stockmanager.SemaineCValidator = stockmanagerDescSemaineC.Validators[0].(func(int) error)
+	// stockmanagerDescSemaineD is the schema descriptor for SemaineD field.
+	stockmanagerDescSemaineD := stockmanagerFields[5].Descriptor()
+	// stockmanager.SemaineDValidator is a validator for the "SemaineD" field. It is called by the builders before save.
+	stockmanager.SemaineDValidator = stockmanagerDescSemaineD.Validators[0].(func(int) error)
+	// stockmanagerDescSemaineE is the schema descriptor for SemaineE field.
+	stockmanagerDescSemaineE := stockmanagerFields[6].Descriptor()
+	// stockmanager.SemaineEValidator is a validator for the "SemaineE" field. It is called by the builders before save.
+	stockmanager.SemaineEValidator = stockmanagerDescSemaineE.Validators[0].(func(int) error)
+	// stockmanagerDescSemaineF is the schema descriptor for SemaineF field.
+	stockmanagerDescSemaineF := stockmanagerFields[7].Descriptor()
+	// stockmanager.SemaineFValidator is a validator for the "SemaineF" field. It is called by the builders before save.
+	stockmanager.SemaineFValidator = stockmanagerDescSemaineF.Validators[0].(func(int) error)
+	// stockmanagerDescSemaineG is the schema descriptor for SemaineG field.
+	stockmanagerDescSemaineG := stockmanagerFields[8].Descriptor()
+	// stockmanager.SemaineGValidator is a validator for the "SemaineG" field. It is called by the builders before save.
+	stockmanager.SemaineGValidator = stockmanagerDescSemaineG.Validators[0].(func(int) error)
+	// stockmanagerDescSemaineH is the schema descriptor for SemaineH field.
+	stockmanagerDescSemaineH := stockmanagerFields[9].Descriptor()
+	// stockmanager.SemaineHValidator is a validator for the "SemaineH" field. It is called by the builders before save.
+	stockmanager.SemaineHValidator = stockmanagerDescSemaineH.Validators[0].(func(int) error)
+	// stockmanagerDescID is the schema descriptor for id field.
+	stockmanagerDescID := stockmanagerFields[0].Descriptor()
+	// stockmanager.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	stockmanager.IDValidator = stockmanagerDescID.Validators[0].(func(int) error)
 }

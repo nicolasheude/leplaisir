@@ -26,6 +26,116 @@ func (smu *StockManagerUpdate) Where(ps ...predicate.StockManager) *StockManager
 	return smu
 }
 
+// SetActivite sets the "Activite" field.
+func (smu *StockManagerUpdate) SetActivite(s string) *StockManagerUpdate {
+	smu.mutation.SetActivite(s)
+	return smu
+}
+
+// SetSemaineA sets the "SemaineA" field.
+func (smu *StockManagerUpdate) SetSemaineA(i int) *StockManagerUpdate {
+	smu.mutation.ResetSemaineA()
+	smu.mutation.SetSemaineA(i)
+	return smu
+}
+
+// AddSemaineA adds i to the "SemaineA" field.
+func (smu *StockManagerUpdate) AddSemaineA(i int) *StockManagerUpdate {
+	smu.mutation.AddSemaineA(i)
+	return smu
+}
+
+// SetSemaineB sets the "SemaineB" field.
+func (smu *StockManagerUpdate) SetSemaineB(i int) *StockManagerUpdate {
+	smu.mutation.ResetSemaineB()
+	smu.mutation.SetSemaineB(i)
+	return smu
+}
+
+// AddSemaineB adds i to the "SemaineB" field.
+func (smu *StockManagerUpdate) AddSemaineB(i int) *StockManagerUpdate {
+	smu.mutation.AddSemaineB(i)
+	return smu
+}
+
+// SetSemaineC sets the "SemaineC" field.
+func (smu *StockManagerUpdate) SetSemaineC(i int) *StockManagerUpdate {
+	smu.mutation.ResetSemaineC()
+	smu.mutation.SetSemaineC(i)
+	return smu
+}
+
+// AddSemaineC adds i to the "SemaineC" field.
+func (smu *StockManagerUpdate) AddSemaineC(i int) *StockManagerUpdate {
+	smu.mutation.AddSemaineC(i)
+	return smu
+}
+
+// SetSemaineD sets the "SemaineD" field.
+func (smu *StockManagerUpdate) SetSemaineD(i int) *StockManagerUpdate {
+	smu.mutation.ResetSemaineD()
+	smu.mutation.SetSemaineD(i)
+	return smu
+}
+
+// AddSemaineD adds i to the "SemaineD" field.
+func (smu *StockManagerUpdate) AddSemaineD(i int) *StockManagerUpdate {
+	smu.mutation.AddSemaineD(i)
+	return smu
+}
+
+// SetSemaineE sets the "SemaineE" field.
+func (smu *StockManagerUpdate) SetSemaineE(i int) *StockManagerUpdate {
+	smu.mutation.ResetSemaineE()
+	smu.mutation.SetSemaineE(i)
+	return smu
+}
+
+// AddSemaineE adds i to the "SemaineE" field.
+func (smu *StockManagerUpdate) AddSemaineE(i int) *StockManagerUpdate {
+	smu.mutation.AddSemaineE(i)
+	return smu
+}
+
+// SetSemaineF sets the "SemaineF" field.
+func (smu *StockManagerUpdate) SetSemaineF(i int) *StockManagerUpdate {
+	smu.mutation.ResetSemaineF()
+	smu.mutation.SetSemaineF(i)
+	return smu
+}
+
+// AddSemaineF adds i to the "SemaineF" field.
+func (smu *StockManagerUpdate) AddSemaineF(i int) *StockManagerUpdate {
+	smu.mutation.AddSemaineF(i)
+	return smu
+}
+
+// SetSemaineG sets the "SemaineG" field.
+func (smu *StockManagerUpdate) SetSemaineG(i int) *StockManagerUpdate {
+	smu.mutation.ResetSemaineG()
+	smu.mutation.SetSemaineG(i)
+	return smu
+}
+
+// AddSemaineG adds i to the "SemaineG" field.
+func (smu *StockManagerUpdate) AddSemaineG(i int) *StockManagerUpdate {
+	smu.mutation.AddSemaineG(i)
+	return smu
+}
+
+// SetSemaineH sets the "SemaineH" field.
+func (smu *StockManagerUpdate) SetSemaineH(i int) *StockManagerUpdate {
+	smu.mutation.ResetSemaineH()
+	smu.mutation.SetSemaineH(i)
+	return smu
+}
+
+// AddSemaineH adds i to the "SemaineH" field.
+func (smu *StockManagerUpdate) AddSemaineH(i int) *StockManagerUpdate {
+	smu.mutation.AddSemaineH(i)
+	return smu
+}
+
 // Mutation returns the StockManagerMutation object of the builder.
 func (smu *StockManagerUpdate) Mutation() *StockManagerMutation {
 	return smu.mutation
@@ -38,12 +148,18 @@ func (smu *StockManagerUpdate) Save(ctx context.Context) (int, error) {
 		affected int
 	)
 	if len(smu.hooks) == 0 {
+		if err = smu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = smu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*StockManagerMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = smu.check(); err != nil {
+				return 0, err
 			}
 			smu.mutation = mutation
 			affected, err = smu.sqlSave(ctx)
@@ -82,6 +198,51 @@ func (smu *StockManagerUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (smu *StockManagerUpdate) check() error {
+	if v, ok := smu.mutation.SemaineA(); ok {
+		if err := stockmanager.SemaineAValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineA", err: fmt.Errorf("ent: validator failed for field \"SemaineA\": %w", err)}
+		}
+	}
+	if v, ok := smu.mutation.SemaineB(); ok {
+		if err := stockmanager.SemaineBValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineB", err: fmt.Errorf("ent: validator failed for field \"SemaineB\": %w", err)}
+		}
+	}
+	if v, ok := smu.mutation.SemaineC(); ok {
+		if err := stockmanager.SemaineCValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineC", err: fmt.Errorf("ent: validator failed for field \"SemaineC\": %w", err)}
+		}
+	}
+	if v, ok := smu.mutation.SemaineD(); ok {
+		if err := stockmanager.SemaineDValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineD", err: fmt.Errorf("ent: validator failed for field \"SemaineD\": %w", err)}
+		}
+	}
+	if v, ok := smu.mutation.SemaineE(); ok {
+		if err := stockmanager.SemaineEValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineE", err: fmt.Errorf("ent: validator failed for field \"SemaineE\": %w", err)}
+		}
+	}
+	if v, ok := smu.mutation.SemaineF(); ok {
+		if err := stockmanager.SemaineFValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineF", err: fmt.Errorf("ent: validator failed for field \"SemaineF\": %w", err)}
+		}
+	}
+	if v, ok := smu.mutation.SemaineG(); ok {
+		if err := stockmanager.SemaineGValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineG", err: fmt.Errorf("ent: validator failed for field \"SemaineG\": %w", err)}
+		}
+	}
+	if v, ok := smu.mutation.SemaineH(); ok {
+		if err := stockmanager.SemaineHValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineH", err: fmt.Errorf("ent: validator failed for field \"SemaineH\": %w", err)}
+		}
+	}
+	return nil
+}
+
 func (smu *StockManagerUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -99,6 +260,125 @@ func (smu *StockManagerUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := smu.mutation.Activite(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: stockmanager.FieldActivite,
+		})
+	}
+	if value, ok := smu.mutation.SemaineA(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineA,
+		})
+	}
+	if value, ok := smu.mutation.AddedSemaineA(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineA,
+		})
+	}
+	if value, ok := smu.mutation.SemaineB(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineB,
+		})
+	}
+	if value, ok := smu.mutation.AddedSemaineB(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineB,
+		})
+	}
+	if value, ok := smu.mutation.SemaineC(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineC,
+		})
+	}
+	if value, ok := smu.mutation.AddedSemaineC(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineC,
+		})
+	}
+	if value, ok := smu.mutation.SemaineD(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineD,
+		})
+	}
+	if value, ok := smu.mutation.AddedSemaineD(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineD,
+		})
+	}
+	if value, ok := smu.mutation.SemaineE(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineE,
+		})
+	}
+	if value, ok := smu.mutation.AddedSemaineE(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineE,
+		})
+	}
+	if value, ok := smu.mutation.SemaineF(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineF,
+		})
+	}
+	if value, ok := smu.mutation.AddedSemaineF(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineF,
+		})
+	}
+	if value, ok := smu.mutation.SemaineG(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineG,
+		})
+	}
+	if value, ok := smu.mutation.AddedSemaineG(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineG,
+		})
+	}
+	if value, ok := smu.mutation.SemaineH(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineH,
+		})
+	}
+	if value, ok := smu.mutation.AddedSemaineH(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineH,
+		})
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, smu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -118,6 +398,116 @@ type StockManagerUpdateOne struct {
 	mutation *StockManagerMutation
 }
 
+// SetActivite sets the "Activite" field.
+func (smuo *StockManagerUpdateOne) SetActivite(s string) *StockManagerUpdateOne {
+	smuo.mutation.SetActivite(s)
+	return smuo
+}
+
+// SetSemaineA sets the "SemaineA" field.
+func (smuo *StockManagerUpdateOne) SetSemaineA(i int) *StockManagerUpdateOne {
+	smuo.mutation.ResetSemaineA()
+	smuo.mutation.SetSemaineA(i)
+	return smuo
+}
+
+// AddSemaineA adds i to the "SemaineA" field.
+func (smuo *StockManagerUpdateOne) AddSemaineA(i int) *StockManagerUpdateOne {
+	smuo.mutation.AddSemaineA(i)
+	return smuo
+}
+
+// SetSemaineB sets the "SemaineB" field.
+func (smuo *StockManagerUpdateOne) SetSemaineB(i int) *StockManagerUpdateOne {
+	smuo.mutation.ResetSemaineB()
+	smuo.mutation.SetSemaineB(i)
+	return smuo
+}
+
+// AddSemaineB adds i to the "SemaineB" field.
+func (smuo *StockManagerUpdateOne) AddSemaineB(i int) *StockManagerUpdateOne {
+	smuo.mutation.AddSemaineB(i)
+	return smuo
+}
+
+// SetSemaineC sets the "SemaineC" field.
+func (smuo *StockManagerUpdateOne) SetSemaineC(i int) *StockManagerUpdateOne {
+	smuo.mutation.ResetSemaineC()
+	smuo.mutation.SetSemaineC(i)
+	return smuo
+}
+
+// AddSemaineC adds i to the "SemaineC" field.
+func (smuo *StockManagerUpdateOne) AddSemaineC(i int) *StockManagerUpdateOne {
+	smuo.mutation.AddSemaineC(i)
+	return smuo
+}
+
+// SetSemaineD sets the "SemaineD" field.
+func (smuo *StockManagerUpdateOne) SetSemaineD(i int) *StockManagerUpdateOne {
+	smuo.mutation.ResetSemaineD()
+	smuo.mutation.SetSemaineD(i)
+	return smuo
+}
+
+// AddSemaineD adds i to the "SemaineD" field.
+func (smuo *StockManagerUpdateOne) AddSemaineD(i int) *StockManagerUpdateOne {
+	smuo.mutation.AddSemaineD(i)
+	return smuo
+}
+
+// SetSemaineE sets the "SemaineE" field.
+func (smuo *StockManagerUpdateOne) SetSemaineE(i int) *StockManagerUpdateOne {
+	smuo.mutation.ResetSemaineE()
+	smuo.mutation.SetSemaineE(i)
+	return smuo
+}
+
+// AddSemaineE adds i to the "SemaineE" field.
+func (smuo *StockManagerUpdateOne) AddSemaineE(i int) *StockManagerUpdateOne {
+	smuo.mutation.AddSemaineE(i)
+	return smuo
+}
+
+// SetSemaineF sets the "SemaineF" field.
+func (smuo *StockManagerUpdateOne) SetSemaineF(i int) *StockManagerUpdateOne {
+	smuo.mutation.ResetSemaineF()
+	smuo.mutation.SetSemaineF(i)
+	return smuo
+}
+
+// AddSemaineF adds i to the "SemaineF" field.
+func (smuo *StockManagerUpdateOne) AddSemaineF(i int) *StockManagerUpdateOne {
+	smuo.mutation.AddSemaineF(i)
+	return smuo
+}
+
+// SetSemaineG sets the "SemaineG" field.
+func (smuo *StockManagerUpdateOne) SetSemaineG(i int) *StockManagerUpdateOne {
+	smuo.mutation.ResetSemaineG()
+	smuo.mutation.SetSemaineG(i)
+	return smuo
+}
+
+// AddSemaineG adds i to the "SemaineG" field.
+func (smuo *StockManagerUpdateOne) AddSemaineG(i int) *StockManagerUpdateOne {
+	smuo.mutation.AddSemaineG(i)
+	return smuo
+}
+
+// SetSemaineH sets the "SemaineH" field.
+func (smuo *StockManagerUpdateOne) SetSemaineH(i int) *StockManagerUpdateOne {
+	smuo.mutation.ResetSemaineH()
+	smuo.mutation.SetSemaineH(i)
+	return smuo
+}
+
+// AddSemaineH adds i to the "SemaineH" field.
+func (smuo *StockManagerUpdateOne) AddSemaineH(i int) *StockManagerUpdateOne {
+	smuo.mutation.AddSemaineH(i)
+	return smuo
+}
+
 // Mutation returns the StockManagerMutation object of the builder.
 func (smuo *StockManagerUpdateOne) Mutation() *StockManagerMutation {
 	return smuo.mutation
@@ -130,12 +520,18 @@ func (smuo *StockManagerUpdateOne) Save(ctx context.Context) (*StockManager, err
 		node *StockManager
 	)
 	if len(smuo.hooks) == 0 {
+		if err = smuo.check(); err != nil {
+			return nil, err
+		}
 		node, err = smuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*StockManagerMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = smuo.check(); err != nil {
+				return nil, err
 			}
 			smuo.mutation = mutation
 			node, err = smuo.sqlSave(ctx)
@@ -174,6 +570,51 @@ func (smuo *StockManagerUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (smuo *StockManagerUpdateOne) check() error {
+	if v, ok := smuo.mutation.SemaineA(); ok {
+		if err := stockmanager.SemaineAValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineA", err: fmt.Errorf("ent: validator failed for field \"SemaineA\": %w", err)}
+		}
+	}
+	if v, ok := smuo.mutation.SemaineB(); ok {
+		if err := stockmanager.SemaineBValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineB", err: fmt.Errorf("ent: validator failed for field \"SemaineB\": %w", err)}
+		}
+	}
+	if v, ok := smuo.mutation.SemaineC(); ok {
+		if err := stockmanager.SemaineCValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineC", err: fmt.Errorf("ent: validator failed for field \"SemaineC\": %w", err)}
+		}
+	}
+	if v, ok := smuo.mutation.SemaineD(); ok {
+		if err := stockmanager.SemaineDValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineD", err: fmt.Errorf("ent: validator failed for field \"SemaineD\": %w", err)}
+		}
+	}
+	if v, ok := smuo.mutation.SemaineE(); ok {
+		if err := stockmanager.SemaineEValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineE", err: fmt.Errorf("ent: validator failed for field \"SemaineE\": %w", err)}
+		}
+	}
+	if v, ok := smuo.mutation.SemaineF(); ok {
+		if err := stockmanager.SemaineFValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineF", err: fmt.Errorf("ent: validator failed for field \"SemaineF\": %w", err)}
+		}
+	}
+	if v, ok := smuo.mutation.SemaineG(); ok {
+		if err := stockmanager.SemaineGValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineG", err: fmt.Errorf("ent: validator failed for field \"SemaineG\": %w", err)}
+		}
+	}
+	if v, ok := smuo.mutation.SemaineH(); ok {
+		if err := stockmanager.SemaineHValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineH", err: fmt.Errorf("ent: validator failed for field \"SemaineH\": %w", err)}
+		}
+	}
+	return nil
+}
+
 func (smuo *StockManagerUpdateOne) sqlSave(ctx context.Context) (_node *StockManager, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -196,6 +637,125 @@ func (smuo *StockManagerUpdateOne) sqlSave(ctx context.Context) (_node *StockMan
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := smuo.mutation.Activite(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: stockmanager.FieldActivite,
+		})
+	}
+	if value, ok := smuo.mutation.SemaineA(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineA,
+		})
+	}
+	if value, ok := smuo.mutation.AddedSemaineA(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineA,
+		})
+	}
+	if value, ok := smuo.mutation.SemaineB(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineB,
+		})
+	}
+	if value, ok := smuo.mutation.AddedSemaineB(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineB,
+		})
+	}
+	if value, ok := smuo.mutation.SemaineC(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineC,
+		})
+	}
+	if value, ok := smuo.mutation.AddedSemaineC(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineC,
+		})
+	}
+	if value, ok := smuo.mutation.SemaineD(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineD,
+		})
+	}
+	if value, ok := smuo.mutation.AddedSemaineD(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineD,
+		})
+	}
+	if value, ok := smuo.mutation.SemaineE(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineE,
+		})
+	}
+	if value, ok := smuo.mutation.AddedSemaineE(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineE,
+		})
+	}
+	if value, ok := smuo.mutation.SemaineF(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineF,
+		})
+	}
+	if value, ok := smuo.mutation.AddedSemaineF(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineF,
+		})
+	}
+	if value, ok := smuo.mutation.SemaineG(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineG,
+		})
+	}
+	if value, ok := smuo.mutation.AddedSemaineG(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineG,
+		})
+	}
+	if value, ok := smuo.mutation.SemaineH(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineH,
+		})
+	}
+	if value, ok := smuo.mutation.AddedSemaineH(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineH,
+		})
 	}
 	_node = &StockManager{config: smuo.config}
 	_spec.Assign = _node.assignValues

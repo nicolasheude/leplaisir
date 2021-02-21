@@ -5,6 +5,7 @@ package ent
 import (
 	"context"
 	"dechild/ent/stockmanager"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -16,6 +17,66 @@ type StockManagerCreate struct {
 	config
 	mutation *StockManagerMutation
 	hooks    []Hook
+}
+
+// SetActivite sets the "Activite" field.
+func (smc *StockManagerCreate) SetActivite(s string) *StockManagerCreate {
+	smc.mutation.SetActivite(s)
+	return smc
+}
+
+// SetSemaineA sets the "SemaineA" field.
+func (smc *StockManagerCreate) SetSemaineA(i int) *StockManagerCreate {
+	smc.mutation.SetSemaineA(i)
+	return smc
+}
+
+// SetSemaineB sets the "SemaineB" field.
+func (smc *StockManagerCreate) SetSemaineB(i int) *StockManagerCreate {
+	smc.mutation.SetSemaineB(i)
+	return smc
+}
+
+// SetSemaineC sets the "SemaineC" field.
+func (smc *StockManagerCreate) SetSemaineC(i int) *StockManagerCreate {
+	smc.mutation.SetSemaineC(i)
+	return smc
+}
+
+// SetSemaineD sets the "SemaineD" field.
+func (smc *StockManagerCreate) SetSemaineD(i int) *StockManagerCreate {
+	smc.mutation.SetSemaineD(i)
+	return smc
+}
+
+// SetSemaineE sets the "SemaineE" field.
+func (smc *StockManagerCreate) SetSemaineE(i int) *StockManagerCreate {
+	smc.mutation.SetSemaineE(i)
+	return smc
+}
+
+// SetSemaineF sets the "SemaineF" field.
+func (smc *StockManagerCreate) SetSemaineF(i int) *StockManagerCreate {
+	smc.mutation.SetSemaineF(i)
+	return smc
+}
+
+// SetSemaineG sets the "SemaineG" field.
+func (smc *StockManagerCreate) SetSemaineG(i int) *StockManagerCreate {
+	smc.mutation.SetSemaineG(i)
+	return smc
+}
+
+// SetSemaineH sets the "SemaineH" field.
+func (smc *StockManagerCreate) SetSemaineH(i int) *StockManagerCreate {
+	smc.mutation.SetSemaineH(i)
+	return smc
+}
+
+// SetID sets the "id" field.
+func (smc *StockManagerCreate) SetID(i int) *StockManagerCreate {
+	smc.mutation.SetID(i)
+	return smc
 }
 
 // Mutation returns the StockManagerMutation object of the builder.
@@ -69,6 +130,78 @@ func (smc *StockManagerCreate) SaveX(ctx context.Context) *StockManager {
 
 // check runs all checks and user-defined validators on the builder.
 func (smc *StockManagerCreate) check() error {
+	if _, ok := smc.mutation.Activite(); !ok {
+		return &ValidationError{Name: "Activite", err: errors.New("ent: missing required field \"Activite\"")}
+	}
+	if _, ok := smc.mutation.SemaineA(); !ok {
+		return &ValidationError{Name: "SemaineA", err: errors.New("ent: missing required field \"SemaineA\"")}
+	}
+	if v, ok := smc.mutation.SemaineA(); ok {
+		if err := stockmanager.SemaineAValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineA", err: fmt.Errorf("ent: validator failed for field \"SemaineA\": %w", err)}
+		}
+	}
+	if _, ok := smc.mutation.SemaineB(); !ok {
+		return &ValidationError{Name: "SemaineB", err: errors.New("ent: missing required field \"SemaineB\"")}
+	}
+	if v, ok := smc.mutation.SemaineB(); ok {
+		if err := stockmanager.SemaineBValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineB", err: fmt.Errorf("ent: validator failed for field \"SemaineB\": %w", err)}
+		}
+	}
+	if _, ok := smc.mutation.SemaineC(); !ok {
+		return &ValidationError{Name: "SemaineC", err: errors.New("ent: missing required field \"SemaineC\"")}
+	}
+	if v, ok := smc.mutation.SemaineC(); ok {
+		if err := stockmanager.SemaineCValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineC", err: fmt.Errorf("ent: validator failed for field \"SemaineC\": %w", err)}
+		}
+	}
+	if _, ok := smc.mutation.SemaineD(); !ok {
+		return &ValidationError{Name: "SemaineD", err: errors.New("ent: missing required field \"SemaineD\"")}
+	}
+	if v, ok := smc.mutation.SemaineD(); ok {
+		if err := stockmanager.SemaineDValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineD", err: fmt.Errorf("ent: validator failed for field \"SemaineD\": %w", err)}
+		}
+	}
+	if _, ok := smc.mutation.SemaineE(); !ok {
+		return &ValidationError{Name: "SemaineE", err: errors.New("ent: missing required field \"SemaineE\"")}
+	}
+	if v, ok := smc.mutation.SemaineE(); ok {
+		if err := stockmanager.SemaineEValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineE", err: fmt.Errorf("ent: validator failed for field \"SemaineE\": %w", err)}
+		}
+	}
+	if _, ok := smc.mutation.SemaineF(); !ok {
+		return &ValidationError{Name: "SemaineF", err: errors.New("ent: missing required field \"SemaineF\"")}
+	}
+	if v, ok := smc.mutation.SemaineF(); ok {
+		if err := stockmanager.SemaineFValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineF", err: fmt.Errorf("ent: validator failed for field \"SemaineF\": %w", err)}
+		}
+	}
+	if _, ok := smc.mutation.SemaineG(); !ok {
+		return &ValidationError{Name: "SemaineG", err: errors.New("ent: missing required field \"SemaineG\"")}
+	}
+	if v, ok := smc.mutation.SemaineG(); ok {
+		if err := stockmanager.SemaineGValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineG", err: fmt.Errorf("ent: validator failed for field \"SemaineG\": %w", err)}
+		}
+	}
+	if _, ok := smc.mutation.SemaineH(); !ok {
+		return &ValidationError{Name: "SemaineH", err: errors.New("ent: missing required field \"SemaineH\"")}
+	}
+	if v, ok := smc.mutation.SemaineH(); ok {
+		if err := stockmanager.SemaineHValidator(v); err != nil {
+			return &ValidationError{Name: "SemaineH", err: fmt.Errorf("ent: validator failed for field \"SemaineH\": %w", err)}
+		}
+	}
+	if v, ok := smc.mutation.ID(); ok {
+		if err := stockmanager.IDValidator(v); err != nil {
+			return &ValidationError{Name: "id", err: fmt.Errorf("ent: validator failed for field \"id\": %w", err)}
+		}
+	}
 	return nil
 }
 
@@ -80,8 +213,10 @@ func (smc *StockManagerCreate) sqlSave(ctx context.Context) (*StockManager, erro
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _node.ID == 0 {
+		id := _spec.ID.Value.(int64)
+		_node.ID = int(id)
+	}
 	return _node, nil
 }
 
@@ -96,6 +231,82 @@ func (smc *StockManagerCreate) createSpec() (*StockManager, *sqlgraph.CreateSpec
 			},
 		}
 	)
+	if id, ok := smc.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = id
+	}
+	if value, ok := smc.mutation.Activite(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: stockmanager.FieldActivite,
+		})
+		_node.Activite = value
+	}
+	if value, ok := smc.mutation.SemaineA(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineA,
+		})
+		_node.SemaineA = value
+	}
+	if value, ok := smc.mutation.SemaineB(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineB,
+		})
+		_node.SemaineB = value
+	}
+	if value, ok := smc.mutation.SemaineC(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineC,
+		})
+		_node.SemaineC = value
+	}
+	if value, ok := smc.mutation.SemaineD(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineD,
+		})
+		_node.SemaineD = value
+	}
+	if value, ok := smc.mutation.SemaineE(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineE,
+		})
+		_node.SemaineE = value
+	}
+	if value, ok := smc.mutation.SemaineF(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineF,
+		})
+		_node.SemaineF = value
+	}
+	if value, ok := smc.mutation.SemaineG(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineG,
+		})
+		_node.SemaineG = value
+	}
+	if value, ok := smc.mutation.SemaineH(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: stockmanager.FieldSemaineH,
+		})
+		_node.SemaineH = value
+	}
 	return _node, _spec
 }
 
@@ -138,8 +349,10 @@ func (smcb *StockManagerCreateBulk) Save(ctx context.Context) ([]*StockManager, 
 				if err != nil {
 					return nil, err
 				}
-				id := specs[i].ID.Value.(int64)
-				nodes[i].ID = int(id)
+				if nodes[i].ID == 0 {
+					id := specs[i].ID.Value.(int64)
+					nodes[i].ID = int(id)
+				}
 				return nodes[i], nil
 			})
 			for i := len(builder.hooks) - 1; i >= 0; i-- {

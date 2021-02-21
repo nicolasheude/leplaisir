@@ -9,21 +9,6 @@ import SignIn from './SignIn/app'
 import SignUpConfirm from './SignUpConfirm/app'
 import Tableau from './Form/Table/Table'
 
-/*
-          <header>
-            <nav>
-              <ul>
-            <li>
-              <Link to="/sign-up">Formulaire</Link>
-                </li>
-                <li>
-                  <Link to="/sign-in">Admin</Link>
-                </li>
-              </ul>
-            </nav>
-          </header>
-*/
-
 export default function AppRouter() {
      return (
          <div>
@@ -42,7 +27,7 @@ export default function AppRouter() {
               <Route path="/" exact component={IndexComponent} />
               <Route path="/sign-up" component={NameForm} />
               <Route path="/sign-in" component={SignIn} />
-              <Route path="/dash" component={Tableau} />
+              <Route path="/manager" component={Tableau} />
             </Router>
 
          </div>
