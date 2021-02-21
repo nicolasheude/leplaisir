@@ -4,7 +4,18 @@ import (
 	"context"
 	"dechild/database"
 	"dechild/ent"
+	"dechild/softcrypto"
+	"encoding/hex"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"net/http"
+	"os"
 )
+
+type AdminUser struct {
+	Identifiant string `json:"identifiant"`
+	MotDePasse string `json:"mot_de_passe"`
+}
 
 func IfAdminInit(ctx context.Context, client *ent.Client) bool {
 	db, _ := client.Admin.
@@ -18,10 +29,12 @@ func IfAdminInit(ctx context.Context, client *ent.Client) bool {
 
 func InitAdmin() {
 	admin := database.Db.Def
+	identifiant := softcrypto.Encrypt(os.Getenv("ID"), hex.EncodeToString([]byte(os.Getenv("KEY"))))
+	password := softcrypto.Encrypt(os.Getenv("PW"), hex.EncodeToString([]byte(os.Getenv("KEY"))))
 	admin.Admin.
 		Create().
-		SetIdentifiant("nicolas.heude@tcm.fr").
-		SetMotDePasse("1234").
+		SetIdentifiant(identifiant).
+		SetMotDePasse(password).
 		Save(database.Db.Ctx)
 }
 
@@ -31,33 +44,40 @@ func InitAdminManager() {
 	}
 }
 
-/*
-func ifIdCorrect(email, password string) int {
-	lenDb := len(User.UserDB) - 1
-	if lenDb < 0 {
-		return 84
+func ifIdCorrect(identifiant, password string) error {
+	user := database.Db.Def
+	db, err := user.Admin.
+		Query().
+		All(database.Db.Ctx)
+	if err != nil || len(db) == 0{
+		return fmt.Errorf("No matching data: %w", err)
 	}
-	for i := 0; i <= lenDb; i++ {
-		if User.UserDB[i].Email == email && User.UserDB[i].Password == password {
-			return 0
+	DbAdmin := make([]AdminUser, len(db))
+	for i := range db {
+		DbAdmin[i] = AdminUser{
+			Identifiant: softcrypto.Decrypt(db[i].Identifiant, hex.EncodeToString([]byte(os.Getenv("KEY")))),
+			MotDePasse:  softcrypto.Decrypt(db[i].MotDePasse, hex.EncodeToString([]byte(os.Getenv("KEY")))),
 		}
 	}
-	return 84
+	for i := range DbAdmin {
+		if identifiant == DbAdmin[i].Identifiant && password == DbAdmin[i].MotDePasse {
+			return nil
+		}
+	}
+	return fmt.Errorf("No matching data: %w", err)
 }
 
-func singinSession(c *gin.Context) {
-	email := c.PostForm("email")
+func LoginSession(c *gin.Context) {
+	identifiant := c.PostForm("identifiant")
 	password := c.PostForm("password")
-	if email == "" || password == "" {
+	if identifiant == "" || password == "" {
 		c.AbortWithStatus(http.StatusBadRequest)
 	} else {
-		if ifIdCorrect(email, password) == 84 {
+		if ifIdCorrect(identifiant, password) != nil {
 			c.String(http.StatusBadRequest, "No user corresponds to the transmitted identifier, please try again.")
 			return
 		}
-		emailCry := softcrypto.Encrypt(email, hex.EncodeToString([]byte(os.Getenv("KEY"))))
-		c.SetCookie("email", emailCry, 3600, "/singin-session", "0.0.0.0", true, true)
 		c.String(http.StatusOK, "User successfully logged in !")
 	}
 	return
- */
+}

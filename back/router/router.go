@@ -78,4 +78,5 @@ func GetDbWeek(c *gin.Context) {
 func ApplyRoutes(r *gin.Engine) {
 	r.POST("/form", GetForm)
 	r.GET("/semaine", GetDbWeek)
+	r.POST("/admin", controllers.LoginSession)
 }
